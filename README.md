@@ -4,7 +4,7 @@
 
 ### Dependencies
 
-Current production version of python interpreter is 3.9.6, so it is recommended to use same python version in your
+Current production version of python interpreter is 3.8, so it is recommended to use same python version in your
 development environment.
 
 ### On the terminal
@@ -45,4 +45,12 @@ Then, run this command on terminal
 ```sh
 pip install -r src/requirements.txt -r src/requirements-dev.txt
 python src/my_script.py
+```
+
+### Troubleshooting
+
+If you get error with tkinter library, make sure you are using python 3.8 (some versions as 3.9.2 has problems with this lib) and run this command on terminal:
+
+```sh
+sudo apt-get install python3-tk
 ```
