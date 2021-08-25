@@ -5,12 +5,13 @@ import datetime
 
 # Input de Dados
 #
-start = "01/06/2021 16:31:32.123"
-end = "16/06/2021 23:59:59.123"
-
-#
 format_string = "%d/%m/%Y %H:%M:%S.%f"
+
+now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S.%f")
+past_date =  datetime.datetime.strptime(now, format_string) - pd.DateOffset(months=6)
+past_date_str = past_date.strftime(format_string)
+
 start_timestamp = int(time.mktime(
-    datetime.datetime.strptime(start, format_string).timetuple()))*1000
+    datetime.datetime.strptime(past_date_str, format_string).timetuple()))*1000
 end_timestamp = int(time.mktime(
-    datetime.datetime.strptime(end, format_string).timetuple()))*1000
+    datetime.datetime.strptime(now, format_string).timetuple()))*1000

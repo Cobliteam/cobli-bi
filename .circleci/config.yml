@@ -1,0 +1,48 @@
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.2.0
+
+jobs:
+  build:
+    executor:
+        name: win/default
+        size: "medium"
+    steps:
+    - checkout
+    - run: 
+        name: installing dependencies
+        command: 
+          pip install pyinstaller
+    - run: 
+        name: creating executable
+        command: |
+          pyinstaller ./src/main.py --onefile
+          Compress-Archive -Path dist, output, src -DestinationPath cobli-bi.zip
+    - persist_to_workspace:
+          root: .
+          paths:
+            - cobli-bi.zip
+  publish_release:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: ./artifacts
+      - run:
+          name: "Publish Release on GitHub"
+          command: |
+            VERSION=0.0.1
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
+    
+workflows:
+  version: 2
+  test_and_publish:
+    jobs:
+      - build
+      - publish_release:
+          requires:
+          - build
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+$/
