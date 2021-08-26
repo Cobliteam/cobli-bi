@@ -8,6 +8,7 @@ if platform.system() == "Windows" and which("python", mode=os.X_OK) == None:
         os.system("curl https://www.python.org/ftp/python/3.9.6/python-3.9.6-amd64.exe -o installpython.exe --silent")
     print("Instalando Python no seu computador...")
     os.system(".\installpython.exe /quiet InstallAllUsers=1 PrependPath=1")
-    os.system("pip install -q pandas matplotlib requests openpyxl")
+    os.system("pip install -r ./requirements.txt")
 
+os.system("pip install -r ./requirements.txt")
 os.system("python ../src/generate_bi_script.py")

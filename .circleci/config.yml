@@ -18,6 +18,7 @@ jobs:
         name: creating executable
         command: |
           pyinstaller ./src/main.py --onefile
+          cp -R requirements.txt dist
           Compress-Archive -Path dist, output, src -DestinationPath cobli-bi.zip
     - persist_to_workspace:
           root: .
