@@ -11,7 +11,8 @@ def getCostsDataFrame(apiKey=None, fleetId='', timestamps=timestamps):
         costsResponse = requests.get(costsURL, headers={'cobli-api-key': apiKey})
         frames.append(pd.read_excel(costsResponse.content, 0))
     dataframe = pd.concat(frames)
-    
-    return dataframe.assign(Frota = [fleetId] * len(dataframe.index))
+    dataframe.assign(Frota = [fleetId] * len(dataframe.index))
+    dataframe.to_csv('costs.csv')
+    return dataframe
 
 costs_function_name = 'getCostsDataFrame'

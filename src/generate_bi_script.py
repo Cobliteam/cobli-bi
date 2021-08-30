@@ -17,7 +17,6 @@ incidentsScript = inspect.getsource(getIncidentsDataFrame)
 initialSource = inspect.getsource(initial)
 
 def check_api_keys(apiKeyList: dict):
-    apiKeyList = apiKeyList or os.getenv('API_KEY')
     for idx, key in enumerate(apiKeyList):
         response = requests.get(
             'https://api.cobli.co/api-keys/external-auth', headers={'cobli-api-key': apiKeyList[key]})
@@ -39,11 +38,12 @@ def generate_script(apiKeyList: dict):
         main_file.write(productivityScript + '\n')
         for key in apiKeyList:
             main_file.write(
-                f"costsFunction = {costs_function_name}('{apiKeyList[key]}', '{key}')\n\n")
+                f"{costs_function_name}('{apiKeyList[key]}', '{key}')\n\n")
             main_file.write(
-                f"incidentsFunction = {incidents_function_name}('{apiKeyList[key]}', '{key}')\n\n")
+                f"{incidents_function_name}('{apiKeyList[key]}', '{key}')\n\n")
             main_file.write(
-                f"productivityFunction = {productivity_function_name}('{apiKeyList[key]}', '{key}')\n\n")
-    exit()
+                f"{productivity_function_name}('{apiKeyList[key]}', '{key}')\n\n")
+    with open('./data_file.txt', 'w') as data_file:
+        data_file.write(initial.now)
 
 gui(check_api_keys)

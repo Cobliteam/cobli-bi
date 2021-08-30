@@ -13,6 +13,8 @@ def getIncidentsDataFrame(apiKey=None, fleetId='', timestamps=timestamps):
         frames.append(pd.read_excel(incidentsResponse.content, 0))
     dataframe = pd.concat(frames)
     
-    return dataframe.assign(Frota = [fleetId] * len(dataframe.index))
+    dataframe.assign(Frota = [fleetId] * len(dataframe.index))
+    dataframe.to_csv('incidents.csv')
+    return dataframe
 
 incidents_function_name = 'getIncidentsDataFrame'

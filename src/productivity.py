@@ -12,7 +12,8 @@ def getProductivityDataFrame(apiKey=None, fleetId='', timestamps=timestamps):
             productivityURL, headers={'cobli-api-key': apiKey})
         frames.append(pd.read_excel(productivityResponse.content, 2))
     dataframe = pd.concat(frames)
-    
-    return dataframe.assign(Frota = [fleetId] * len(dataframe.index))
+    dataframe.assign(Frota = [fleetId] * len(dataframe.index))
+    dataframe.to_csv('productivity.csv')
+    return dataframe
 
 productivity_function_name = 'getProductivityDataFrame'

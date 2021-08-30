@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import time
 import datetime
+import os
 
 # Input de Dados
 #
@@ -21,3 +22,10 @@ for monthsAgo in range(6):
     datetime.datetime.strptime(start_date_str, format_string).timetuple()))*1000
 
     timestamps[monthsAgo] = (start_timestamp_value, end_timestamp_value)
+
+if os.path.exists('./data_file.txt'): 
+    with open('./data_file.txt', 'r') as data_file:
+        last_refresh = data_file.read()
+
+    if last_refresh:
+        timestamps = [last_refresh, now]
