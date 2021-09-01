@@ -1,4 +1,5 @@
 from PySimpleGUI import PySimpleGUI as sg
+import os
 
 def new_line(i):
     return [[sg.T("Nome da Frota: ", key=f"fleetInput {i}"), sg.InputText(key=f"fleet {i}", size=[30, 1]), 
@@ -41,7 +42,7 @@ def gui(check_api_keys):
                 window.find_element(f"errorMessage {invalidApiKeyIndex}").Update(visible=True)
             else: 
                 window.extend_layout(window['-Column-'], [[sg.Output(size=(90,20))]]) 
-                with open('./main_file.txt', 'r') as main_file:
+                with open(os.path.expanduser('~/cobliBI/main_file.txt'), 'r') as main_file:
                     print(main_file.read())
                 window.find_element("-plus-").Update(disabled=True)
                 window.find_element("-generate-").Update(disabled=True)
