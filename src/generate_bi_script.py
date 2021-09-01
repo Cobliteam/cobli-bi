@@ -31,19 +31,19 @@ def check_api_keys(apiKeyList: dict):
 
 
 def generate_script(apiKeyList: dict):
-    with open('./main_file.txt', 'w') as main_file:
-        main_file.write(initialSource + '\n\n')
-        main_file.write(costsScript + '\n')
-        main_file.write(incidentsScript + '\n')
-        main_file.write(productivityScript + '\n')
-        for key in apiKeyList:
-            main_file.write(
-                f"{costs_function_name}('{apiKeyList[key]}', '{key}')\n\n")
-            main_file.write(
-                f"{incidents_function_name}('{apiKeyList[key]}', '{key}')\n\n")
-            main_file.write(
-                f"{productivity_function_name}('{apiKeyList[key]}', '{key}')\n\n")
-    with open('./data_file.txt', 'w') as data_file:
+    print(initialSource + '\n\n')
+    print(costsScript + '\n')
+    print(incidentsScript + '\n')
+    print(productivityScript + '\n')
+    for key in apiKeyList:
+        print(
+            f"costs = {costs_function_name}('{apiKeyList[key]}', '{key}')\n\n")
+        print(
+            f"incidents = {incidents_function_name}('{apiKeyList[key]}', '{key}')\n\n")
+        print(
+            f"productivity = {productivity_function_name}('{apiKeyList[key]}', '{key}')\n\n")
+    os.makedirs(os.path.expanduser('~/cobliBI'), exist_ok=True)
+    with open(os.path.expanduser('~/cobliBI/data_file.txt'), 'w') as data_file:
         data_file.write(initial.now)
 
 gui(check_api_keys)
