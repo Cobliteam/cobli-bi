@@ -3,6 +3,7 @@ import requests
 from productivity import getProductivityDataFrame, productivity_function_name
 from costs import getCostsDataFrame, costs_function_name
 from incidents import getIncidentsDataFrame, incidents_function_name
+from save_last_refresh import upsert_refresh_data, save_last_refresh_function_name
 from gui import gui
 import os
 from dotenv import load_dotenv
@@ -15,6 +16,7 @@ productivityScript = inspect.getsource(getProductivityDataFrame)
 costsScript = inspect.getsource(getCostsDataFrame)
 incidentsScript = inspect.getsource(getIncidentsDataFrame)
 initialSource = inspect.getsource(initial)
+saveLastRefreshSource = inspect.getsource(upsert_refresh_data)
 
 def check_api_keys(apiKeyList: dict):
     for idx, key in enumerate(apiKeyList):
@@ -31,19 +33,21 @@ def check_api_keys(apiKeyList: dict):
 
 
 def generate_script(apiKeyList: dict):
-    with open('./main_file.txt', 'w') as main_file:
+    os.makedirs(os.path.expanduser('~/cobliBI'), exist_ok=True)
+    with open(os.path.expanduser('~/cobliBI/main_file.txt'), 'w') as main_file:
         main_file.write(initialSource + '\n\n')
         main_file.write(costsScript + '\n')
         main_file.write(incidentsScript + '\n')
         main_file.write(productivityScript + '\n')
+        main_file.write(saveLastRefreshSource)
+        main_file.write(f"\n\n{save_last_refresh_function_name}()\n\n")
         for key in apiKeyList:
             main_file.write(
-                f"{costs_function_name}('{apiKeyList[key]}', '{key}')\n\n")
+                f"costs = {costs_function_name}('{apiKeyList[key]}', '{key}')\n\n")
             main_file.write(
-                f"{incidents_function_name}('{apiKeyList[key]}', '{key}')\n\n")
+                f"incidents = {incidents_function_name}('{apiKeyList[key]}', '{key}')\n\n")
             main_file.write(
-                f"{productivity_function_name}('{apiKeyList[key]}', '{key}')\n\n")
-    with open('./data_file.txt', 'w') as data_file:
-        data_file.write(initial.now)
+                f"productivity = {productivity_function_name}('{apiKeyList[key]}', '{key}')\n\n")
+           
 
 gui(check_api_keys)
