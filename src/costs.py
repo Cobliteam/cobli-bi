@@ -1,13 +1,11 @@
 import requests
 import pandas as pd
-from initial import timestamps, shortTimestamp
+from initial import timestamps
 import os
 
 
-def getCostsDataFrame(apiKey=None, fleetName='', currentTimestamp=shortTimestamp or timestamps):
+def getCostsDataFrame(apiKey=None, fleetName='', currentTimestamp=timestamps):
     frames = []
-    if os.path.exists(os.path.expanduser('~/cobliBI/costs.csv')): 
-        frames.append(pd.read_csv(os.path.expanduser('~/cobliBI/costs.csv')))
     for month in currentTimestamp:
         start_timestamp, end_timestamp = currentTimestamp[month]
         costsURL = f"https://api.cobli.co/herbie-1.1/costs/report?begin={start_timestamp}&end={end_timestamp}&tz=America%2FFortaleza"
