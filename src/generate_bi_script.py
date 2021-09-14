@@ -10,7 +10,7 @@ from gui import gui
 
 load_dotenv()
 
-initialSource = inspect.getsource(initial)
+initial_source = inspect.getsource(initial)
 
 
 def check_api_keys(fleet_data: dict):
@@ -31,7 +31,7 @@ def check_api_keys(fleet_data: dict):
 
 
 def generate_script(fleet_data: dict):
-    script_string = f"{initialSource}\n\n"
+    script_string = f"{initial_source}\n\n"
     script_string += f'devices = get_devices_data({fleet_data})\n'
     script_string += f'checklists = get_checklist_data({fleet_data})\n'
     script_string += f'proofs_of_conclusion = get_pocs_data({fleet_data}, start_datetime, end_datetime)\n'
