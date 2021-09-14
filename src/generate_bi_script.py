@@ -5,8 +5,8 @@ import requests
 from PySimpleGUI import PySimpleGUI as sg
 from dotenv import load_dotenv
 
+import initial
 from gui import gui
-from src import initial
 
 load_dotenv()
 
