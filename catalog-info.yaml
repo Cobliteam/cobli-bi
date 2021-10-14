@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cobli-bi
+  description: Executable of python script for BI purposes
+  annotations:
+    circleci.com/project-slug: github/Cobliteam/cobli-bi
+    'backstage.io/kubernetes-label-selector': 'app=cobli-bi-app'
+  tags:
+    - python
+spec:
+  type: service
+  lifecycle: production
+  owner: integrations
