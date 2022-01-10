@@ -5,7 +5,7 @@ metadata:
   description: Executable of python script for BI purposes
   annotations:
     circleci.com/project-slug: github/Cobliteam/cobli-bi
-    'backstage.io/kubernetes-label-selector': 'app=cobli-bi-app'
+    'backstage.io/kubernetes-label-selector': 'tags.datadoghq.com/service=cobli-bi'
   tags:
     - python
 spec:
