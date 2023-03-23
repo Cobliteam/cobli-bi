@@ -43,8 +43,9 @@ API_KEY={your-api-key}
 Then, run this command on terminal
 
 ```sh
-pip install -r src/requirements.txt -r src/requirements-dev.txt
-python src/my_script.py
+pip install -r src/requirements.txt
+cd src
+python generate_bi_script.py 
 ```
 
 ### Troubleshooting
@@ -54,3 +55,6 @@ If you get error with tkinter library, make sure you are using python 3.8 (some 
 ```sh
 sudo apt-get install python3-tk
 ```
+
+### Releases
+The CI will generate a new release on github in **publish_release** job, remember to bump the version of release in ``.circleci/config.yml``
