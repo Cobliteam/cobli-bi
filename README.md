@@ -43,8 +43,9 @@ API_KEY={your-api-key}
 Then, run this command on terminal
 
 ```sh
-pip install -r src/requirements.txt -r src/requirements-dev.txt
-python src/my_script.py
+pip install -r src/requirements.txt
+cd src
+python main.py
 ```
 
 ### Troubleshooting
