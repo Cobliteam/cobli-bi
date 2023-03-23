@@ -55,3 +55,6 @@ If you get error with tkinter library, make sure you are using python 3.8 (some 
 ```sh
 sudo apt-get install python3-tk
 ```
+
+### Releases
+The CI will generate a new release on github in **publish_release** job, remember to bump the version of release in ``.circleci/config.yml``
