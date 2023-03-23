@@ -45,7 +45,7 @@ Then, run this command on terminal
 ```sh
 pip install -r src/requirements.txt
 cd src
-python main.py
+python generate_bi_script.py 
 ```
 
 ### Troubleshooting
