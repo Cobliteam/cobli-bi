@@ -6,21 +6,20 @@ orbs:
 jobs:
   build:
     executor:
-        name: win/default
-        size: "medium"
+      name: win/default
+      size: 'medium'
     steps:
-    - checkout
-    - run: 
-        name: installing dependencies
-        command: 
-          pip install pyinstaller
-    - run: 
-        name: creating executable
-        command: |
-          pyinstaller ./src/main.py --onefile
-          cp -R requirements.txt dist
-          Compress-Archive -Path dist, output, src -DestinationPath cobli-bi.zip
-    - persist_to_workspace:
+      - checkout
+      - run:
+          name: installing dependencies
+          command: pip install pyinstaller
+      - run:
+          name: creating executable
+          command: |
+            pyinstaller ./src/main.py --onefile
+            cp -R requirements.txt dist
+            Compress-Archive -Path dist, output, src -DestinationPath cobli-bi.zip
+      - persist_to_workspace:
           root: .
           paths:
             - cobli-bi.zip
@@ -31,9 +30,9 @@ jobs:
       - attach_workspace:
           at: ./artifacts
       - run:
-          name: "Publish Release on GitHub"
+          name: 'Publish Release on GitHub'
           command: |
-            VERSION=0.0.5
+            VERSION=0.0.6
             ghr \
             -t ${GITHUB_TOKEN} \
             -u ${CIRCLE_PROJECT_USERNAME} \
@@ -49,7 +48,7 @@ workflows:
       - publish_release:
           context: circleci-github-release
           requires:
-          - build
+            - build
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
