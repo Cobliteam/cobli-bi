@@ -36,7 +36,6 @@ def generate_script(fleet_data: dict):
     script_string += f'checklists = get_checklist_data({fleet_data})\n'
     script_string += f'proofs_of_conclusion = get_pocs_data({fleet_data}, start_datetime, end_datetime)\n'
     script_string += f'costs = get_costs_data({fleet_data}, start_datetime, end_datetime)\n'
-    script_string += f'incidents = get_incidents_data({fleet_data}, start_datetime, end_datetime)\n'
     script_string += f'vehicle_performance = get_vehicle_performance_data({fleet_data}, start_datetime, end_datetime)\n'
     script_string += f'driver_performance = get_driver_performance_data({fleet_data}, start_datetime, end_datetime)\n'
 
