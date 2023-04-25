@@ -32,7 +32,7 @@ jobs:
       - run:
           name: 'Publish Release on GitHub'
           command: |
-            VERSION=0.0.6
+            VERSION=0.0.7
             ghr \
             -t ${GITHUB_TOKEN} \
             -u ${CIRCLE_PROJECT_USERNAME} \
