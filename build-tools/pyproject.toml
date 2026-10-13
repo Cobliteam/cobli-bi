@@ -1,0 +1,21 @@
+# Tools that build dist/main.exe in CI. The CircleCI build job installs them
+# from uv.lock and runs PyInstaller with `uv run --locked --project build-tools`.
+# Not named build/: that is PyInstaller's work directory.
+[project]
+name = "cobli-bi-build-tools"
+version = "0"
+# PyInstaller bundles the interpreter it runs on: the Windows executor's
+# Python 3.12, which built release 0.0.8.
+requires-python = "==3.12.*"
+dependencies = [
+    "pyinstaller==6.22.3",
+]
+
+[tool.uv]
+# Not a package: uv installs the dependencies only.
+package = false
+# Cooldown: uv refuses to resolve a version published less than 7 days ago.
+# uv.lock records the window as a span, so the lock does not go stale as days
+# pass. The floor is the first uv release that reads a relative duration.
+required-version = ">=0.9.17"
+exclude-newer = "7 days"
