@@ -8,15 +8,30 @@ jobs:
     executor:
       name: win/default
       size: 'medium'
+    environment:
+      # Use the executor's Python 3.12; never download another one.
+      UV_PYTHON_DOWNLOADS: never
     steps:
       - checkout
       - run:
           name: installing dependencies
-          command: pip install pyinstaller
+          # uv, pinned and checked against the SHA-256 published with the
+          # release, installs PyInstaller and its dependencies from
+          # build-tools/uv.lock, checking every artifact against its hash.
+          # --locked refuses a lock that no longer matches pyproject.toml.
+          command: |
+            $version = "0.10.2"
+            $sha256 = "493ebbe0e06128d6ee4905e1ed5e2a433fb0f7cfc08b0eaca9fab4ca76778ae1"
+            Invoke-WebRequest -Uri "https://github.com/astral-sh/uv/releases/download/$version/uv-x86_64-pc-windows-msvc.zip" -OutFile uv.zip
+            if ((Get-FileHash uv.zip -Algorithm SHA256).Hash -ne $sha256) { throw "uv.zip does not match the expected SHA-256" }
+            Expand-Archive uv.zip -DestinationPath "$HOME\uvbin"
+            & "$HOME\uvbin\uv.exe" sync --locked --project build-tools --python 3.12
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - run:
           name: creating executable
           command: |
-            pyinstaller ./src/main.py --onefile
+            & "$HOME\uvbin\uv.exe" run --locked --project build-tools pyinstaller ./src/main.py --onefile
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
             cp -R requirements.txt dist
             Compress-Archive -Path dist, output, src -DestinationPath cobli-bi.zip
       - persist_to_workspace:
